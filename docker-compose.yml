@@ -1,0 +1,29 @@
+version: '3.4'
+
+services:
+  rabbitmq.docker:
+    image: ${DOCKER_REGISTRY-}rabbitmqdocker
+    build:
+      context: .
+      dockerfile: RabbitMQ.Docker/Dockerfile
+    environment:
+      RABBITMQ_DEFAULT_URL: localhost
+      RABBITMQ_DEFAULT_QUEUE: teste
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+      
+  rabbitmq:
+    image: rabbitmq:management
+    hostname: rabbit
+    command: sh -c "rabbitmq-plugins enable rabbitmq_management; rabbitmq-server"
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+      
+volumes:
+  rabbitmq_data:
