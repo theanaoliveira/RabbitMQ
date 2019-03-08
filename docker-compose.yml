@@ -7,18 +7,16 @@ services:
       context: .
       dockerfile: RabbitMQ.Docker/Dockerfile
     environment:
-      RABBITMQ_DEFAULT_URL: localhost
+      RABBITMQ_DEFAULT_URL: rabbitmq
       RABBITMQ_DEFAULT_QUEUE: teste
       RABBITMQ_DEFAULT_USER: admin
       RABBITMQ_DEFAULT_PASS: admin
-      
+
   rabbitmq:
-    image: rabbitmq:management
-    hostname: rabbit
-    command: sh -c "rabbitmq-plugins enable rabbitmq_management; rabbitmq-server"
+    image: rabbitmq:3-management
     ports:
-      - '5672:5672'
       - '15672:15672'
+      - '5672:5672'     
     environment:
       RABBITMQ_DEFAULT_USER: admin
       RABBITMQ_DEFAULT_PASS: admin

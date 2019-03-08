@@ -50,7 +50,6 @@ namespace RabbitMQ.Docker
                 HostName = lstrAddress,
                 UserName = lstrUser,
                 Password = lstrPassword,
-                Port = 15672
             };
 
             return loFactory.CreateConnection();
@@ -65,6 +64,8 @@ namespace RabbitMQ.Docker
 
             using (var loChannel = ConnectionMQ.CreateModel())
             {
+                loChannel.QueueDeclare(lstrQueueName, true, false, false, null);
+
                 var loBody = Encoding.UTF8.GetBytes(item);
 
                 loChannel.QueueDeclare(queue: lstrQueueName, durable: true, exclusive: false, autoDelete: false, arguments: null);

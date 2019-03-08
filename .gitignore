@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/RabbitMQ.Docker/v16/Server/sqlite3
+/.vs/RabbitMQ.Docker/v16
+/bin/Debug
+/obj
+/RabbitMQ.Docker/bin/Debug/netcoreapp2.2
+/RabbitMQ.Docker/obj
