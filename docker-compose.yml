@@ -11,17 +11,26 @@ services:
       RABBITMQ_DEFAULT_QUEUE: teste
       RABBITMQ_DEFAULT_USER: admin
       RABBITMQ_DEFAULT_PASS: admin
+    depends_on:
+      - rabbitmq
+    networks:
+      - rabbitnet
 
   rabbitmq:
     image: rabbitmq:3-management
     ports:
       - '15672:15672'
-      - '5672:5672'     
+      - '5672:5672'
+    hostname: rabbitmq     
     environment:
       RABBITMQ_DEFAULT_USER: admin
       RABBITMQ_DEFAULT_PASS: admin
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - rabbitnet
       
 volumes:
   rabbitmq_data:
+networks:
+  rabbitnet:
