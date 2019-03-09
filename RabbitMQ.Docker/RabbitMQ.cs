@@ -64,12 +64,12 @@ namespace RabbitMQ.Docker
 
             using (var loChannel = ConnectionMQ.CreateModel())
             {
-                loChannel.QueueDeclare(lstrQueueName, true, false, false, null);
-
                 var loBody = Encoding.UTF8.GetBytes(item);
 
                 loChannel.QueueDeclare(queue: lstrQueueName, durable: true, exclusive: false, autoDelete: false, arguments: null);
-                loChannel.BasicPublish(exchange: "", routingKey: lstrQueueName, basicProperties: null, body: loBody);
+                var prop = loChannel.CreateBasicProperties();
+                prop.Persistent = true;
+                loChannel.BasicPublish(exchange: "", routingKey: lstrQueueName, basicProperties: prop, body: loBody);
             }
         }
 
@@ -82,6 +82,8 @@ namespace RabbitMQ.Docker
 
             var lstrQueueName = Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_QUEUE");
             var loChannel = ConnectionMQ.CreateModel();
+
+            loChannel.QueueDeclare(queue: lstrQueueName, durable: true, exclusive: false, autoDelete: false, arguments: null);
 
             Task.Factory.StartNew(() =>
             {
