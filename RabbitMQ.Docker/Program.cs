@@ -8,7 +8,7 @@ namespace RabbitMQ.Docker
         {
             var rabbitMQ = new RabbitMQ();
 
-        //    rabbitMQ.ReadQueue();
+            rabbitMQ.ReadQueue();
 
             for (var i = 0; i < 1000; i++)
                 rabbitMQ.InsertQueue($"item_{i}");
